@@ -1,0 +1,85 @@
+This is a VM running Linux used for software development -- it contains Xinu sources
+and a text editor (e.g., vi) that can used to modify them.  It also contains a C
+compiler/assembler/linker (gcc) used to produce a binary image.  It also runs a
+DHCP server as well as a TFTP server that are both connected to an internal network.
+Once an image has been produced, it is copied to /srv/tftp/xinu.boot and a backend
+VM is powered on.  The backend VM is configured to use PXE boot, which means it
+broadcasts a DHCP request that is answered by the server.  The response tells the
+backend machine to download file "xinu.grub" -- a copy of the grub boot program set
+up to boot Xinu.  When it runs, grub sets up the VM in 32-bit "protected" mode,
+downloads Xinu, and branches to symbol "start".  Intel chips always boot in 16-bit
+"real" mode (as if we were living in the 1980s), and changing to 32-bit mode is painful
+because it involves CPU-specific steps.  So, we let grub handle the details.
+
+Interestingly, although both VMs have access to the global Internet, there is no
+problem with a TFTP or DHCP server because the servers only run on an "internal"
+network (i.e., a virtual network that is only visible to VMs inside of Vbox).
+To obtain Internet access, each VM is configured with two network adapters.  The
+diagram below shows how various components in the VMs use the two networks.
+Xinu only has a driver for an Intel 82545EM Ethernet device.  Therefore, it only
+looks for such a device, and only finds Adapter 2 (i.e., it cannot send or
+receive packets over the internal network).  Like a commerical NAT box (i.e., a
+wireless router), the NAT box runs a DHCP server and provides IP addresses from a
+private address space.  If more than one backend VM is powered on, they will all
+obtain the same Xinu image as other backend VMs, but each will have a unique IP
+address, so they can communicate with one another.
+
+
+           This VM (runs Linux)                      Backend VM (runs Xinu)
+
+ ----------------------------------------     ---------------------------------------
+|                                        |   |                                       |
+|  ---------       --------   --------   |   |                       ----------      |
+| |  Other  |     |  DHCP  | |  TFTP  |  |   |                      |   Xinu   |     |
+| |  Linux  |     | server | | server |  |   |                       ----------      |
+| | network |      --------   --------   |   |  ----------               |           |
+| |  comm.  |         |          |       |   | | PXE boot |              |           |
+|  ---------          |          |       |   |  ----------               |           |
+|     |                ----      |       |   |      |                    |           |
+|     |                    |     |       |   |      |                    |           |
+|  -----------          -----------      |   |  -----------          -----------     |
+| | Adapter 2 |        | Adapter 1 |     |   | | Adapter 1 |        | Adapter 2 |    |
+|  -----------          -----------      |   |  -----------          -----------     |
+|      |                    |            |   |      |                    |           |
+|      |                    |            |   |      |                    |           |
+ ------|--------------------|------------     ------|--------------------|------------
+       |                    |                       |                    |
+       |                    |  internal network     |                    |
+       |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                 |
+       |                                                                 |
+       |            Private addresses "natted" to the Internet           |
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                          |
+                                          |
+                                       -------
+                                      |  NAT  |
+                                       -------
+                                          |
+                                          V
+                                  To the global Internet
+
+
+To try Xinu, navigate to xinu/compile, and run make, which will link an image and
+copy the result to /srv/tftp/xinu.boot.  Then run:
+
+	sudo minicom --color=on
+
+Once minicom starts, power on the backend VM.  It will PXE-boot grub, which will
+then boot xinu.boot.  All output from Xinu will appear in the minicom window, and
+input typed to the minicom window will be sent to Xinu.
+
+The software development process repeats the following steps:
+
+	1. Change Xinu.  For example,  navigate to the system directory, and add
+	   the following to main.c: 
+
+		kprintf("Hello world. I'm trying something new.\n");
+
+	2. Navigate to the compile directory and run make.
+
+	3. Run minicom --color=on
+
+	4. Double click on the backend VM.
+
+	5. Once you are finished, power down the backend VM.
+
