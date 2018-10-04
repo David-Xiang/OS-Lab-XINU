@@ -1,0 +1,13 @@
+This directory contains a modifiction of the Linksys code that has
+been ported to the x86 and a 3com Ethernet driver added.  In this
+version, the interrupt mechanism has been replaced by one that uses
+the Interrupt Flag in the processor FLAGS register (i.e., the bit
+set with cli/sti).  It still maintains a global interrupt mask for
+the controller that specifies which devices are allowed to interrupt,
+but it only sets the interrupt mask when a new interrupt handler is
+added (e.g., at device initialization time).
+
+The Ethernet driver includes multicast, but it is not yet integrated
+with ethControl (i.e., one has to call eth_mcadd separately.
+
+

@@ -2,3 +2,5 @@ xinu-emulator/compile
 xinu-emulator/config
 xinu-galileo/compile
 xinu-galileo/config
+xinu-x86/compile
+xinu-x86/congfig
