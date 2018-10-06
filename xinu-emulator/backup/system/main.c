@@ -2,7 +2,6 @@
 
 #include <xinu.h>
 
-/* Xinu's main process */
 process	main(void)
 {
 
