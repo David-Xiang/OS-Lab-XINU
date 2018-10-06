@@ -22,8 +22,8 @@ shellcmd xsh_psx(int nargs, char *args[])
 	struct	procent	*prptr;		/* pointer to process		*/
 	int32	i;			/* index into proctabl		*/
 	char *pstate[]	= {		/* names for process states	*/
-        "FREE", "CURR", "READY", "RECV", "SLEEP", "SUSP", "WAIT", "RECTIM"
-    };
+		"FREE", "CURR", "READY", "RECV", "SLEEP", "SUSP", "WAIT", "RECTIM"
+	};
 
 	/* For argument '--help', emit help about the 'ps' command	*/
 
@@ -45,18 +45,18 @@ shellcmd xsh_psx(int nargs, char *args[])
 		return 1;
 	}
 
-    /*-------------- The Modification starts here ----------------- */
+	/*-------------- The Modification starts here ----------------- */
 
 	/* Print header for items from the process table */
 
 	printf("%-3s %-16s %-5s %-4s %-4s %-10s %-10s %-9s %-7s %-7s %-20s\n",
-		   "Pid", "Name", "State", "Prio", "Ppid", "StackBase","StackPtr",
-           "StackSize", "SemWait", "MsgRecv", "Descriptor");
+			"Pid", "Name", "State", "Prio", "Ppid", "StackBase","StackPtr",
+			"StackSize", "SemWait", "MsgRecv", "Descriptor");
 
 	printf("%3s %16s %5s %4s %4s %10s %10s %9s %7s %7s %10s\n",
-		   "---", "----------------", "-----", "----", "----",
-		   "----------", "----------", "---------", "-------", 
-           "-------", "--------------------");
+			"---", "----------------", "-----", "----", "----",
+			"----------", "----------", "---------", "-------",
+			"-------", "--------------------");
 
 	/* Output information for each process */
 
@@ -70,28 +70,28 @@ shellcmd xsh_psx(int nargs, char *args[])
 			prptr->prprio, prptr->prparent, prptr->prstkbase,
 			prptr->prstkptr, prptr->prstklen);
 
-        // print semaphore on which process waits
-        if (prptr->prstate == PR_WAIT){
-            printf("%7d ", prptr->prsem);
-        }else{
-            printf("%7s ", "NA");
-        }
-        
-        // print message sent to this process
-        if (prptr->prhasmsg == TRUE){
-            printf("%7d ", prptr->prmsg);
-        }else{
-            printf("%7s ", "NA");
-        }
+		// print semaphore on which process waits
+		if (prptr->prstate == PR_WAIT){
+			printf("%7d ", prptr->prsem);
+		}else{
+			printf("%7s ", "NA");
+		}
 
-        // print descriptors for the process
-        int j;
-        for (j = 0; j < NDESC; j++){
-            if (j < NDESC - 1)
-                printf("%d/", prptr->prdesc[j]);
-            else
-                printf("%d\n", prptr->prdesc[j]);
-        }    
-    }
+		// print message sent to this process
+		if (prptr->prhasmsg == TRUE){
+			printf("%7d ", prptr->prmsg);
+		}else{
+			printf("%7s ", "NA");
+		}
+
+		// print descriptors for the process
+		int j;
+		for (j = 0; j < NDESC; j++){
+			if (j < NDESC - 1)
+				printf("%d/", prptr->prdesc[j]);
+			else
+				printf("%d\n", prptr->prdesc[j]);
+		}
+	}
 	return 0;
 }
