@@ -1,6 +1,8 @@
 /*  main.c  - main */
-
 #include <xinu.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <custom.h>
 
 /* Xinu's main process */
 process	main(void)
@@ -9,6 +11,7 @@ process	main(void)
 	/* Run the Xinu shell */
 
 	recvclr();
+    E2L1();
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */
