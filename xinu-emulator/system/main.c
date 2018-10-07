@@ -11,7 +11,6 @@ process	main(void)
 	/* Run the Xinu shell */
 
 	recvclr();
-	E3L1(1000, 2, 2);
 	resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 
 	/* Wait for shell to exit and recreate it */

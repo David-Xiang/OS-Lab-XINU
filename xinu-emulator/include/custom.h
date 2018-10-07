@@ -4,3 +4,4 @@
  */
 void E2L1();
 void E3L1();
+void E4L1();
