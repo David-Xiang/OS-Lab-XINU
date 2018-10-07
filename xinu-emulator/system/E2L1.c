@@ -4,9 +4,10 @@
 /*
 	Exercise2 of Lab1
 	1. Create a process to print increasing numbers each second
-	2. In main process, check the process above and if the process is found
-		alive, suspend it for 3 seconds and then wake up it up.
-*/
+	2. In main process, check the process above and if the process is 
+	found alive, suspend it for 3 seconds and then wake up it up.
+ */
+void print_num();
 void E2L1(){
 	pid32 pid = create(print_num, 4096, 60, "print_num", 0);
 	resume(pid);
