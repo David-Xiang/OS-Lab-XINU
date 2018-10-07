@@ -1,12 +1,12 @@
 /* 
-   xsh_psx.c - xsh_psx 
-   Exercise1 of OS Lab1:
-   Design a process to display all process and their attributes:
-   Pid, Name, State, Prio, Ppid, StackBase, StackPtr, StackSize,
-   SemWait, MsgRecv, Descriptor 
-   (last line's stuffs are hard to display...)
-   I modified xsh_ps.c to add a new built-in commmand -- psx.
-   psx means it's enhanced version of command ps.
+	xsh_psx.c - xsh_psx 
+ 	Exercise1 of OS Lab1:
+	Design a process to display all process and their attributes:
+	Pid, Name, State, Prio, Ppid, StackBase, StackPtr, StackSize,
+	SemWait, MsgRecv, Descriptor 
+	(last line's stuffs are hard to display...)
+	I modified xsh_ps.c to add a new built-in commmand -- psx.
+	psx means it's enhanced version of command ps.
  */
 
 #include <xinu.h>
