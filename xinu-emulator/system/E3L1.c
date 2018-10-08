@@ -23,7 +23,7 @@ int DISHES;
 int DINERS;
 
 void cook(int total){
-	int count = DISHES;
+	int count = 0;
 	int choice = 0;
 	while(count < total){
 		choice = count % DISHES;
