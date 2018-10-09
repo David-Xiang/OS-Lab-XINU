@@ -23,7 +23,11 @@ void E2L1(){
 			resume(pid);
 		}else{
 			kprintf("suspend\n");
-			suspend(pid);
+			
+			int prio = suspend(pid);
+			if (prio == SYSERR)
+				continue;
+
 			sleep(3);
 			resume(pid);
 		}
