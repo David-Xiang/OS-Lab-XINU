@@ -43,8 +43,10 @@ void printBlks(){
 	kprintf("%-5s %-10s %-8s\n", "index", "addr", "size");
 	kprintf("%-5s %-10s %-8s\n", "-----", "----------", "--------");
 	while(curr != NULL){
-		kprintf("%5d 0x%08X %8d\n", count++, curr, (uint32)curr->mlength);
+		kprintf("%5d 0x%08X %8d\n", count++, curr, curr->mlength);
 		curr = curr->mnext;
 	}
+	kprintf("-------------------------\n");
+	kprintf("%25d\n", memlist.mlength);
 	return;
 }
