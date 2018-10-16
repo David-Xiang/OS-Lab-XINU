@@ -53,10 +53,19 @@ syscall	freemem(
 	if (top == (uint32) block) { 	/* Coalesce with previous block	*/
 		prev->mlength += nbytes;
 		block = prev;
+		
+		/* XDW: update heaptop */
+		if ((void *)prev + prev->mlength ==  heaptop)
+			heaptop = (void *)prev;
+	
 	} else {			/* Link into list as new node	*/
 		block->mnext = next;
 		block->mlength = nbytes;
 		prev->mnext = block;
+
+		/* XDW: update heaptop */
+		if ((void *) block + nbytes == heaptop)
+			heaptop = (void *)block;
 	}
 
 	/* Coalesce with next block if adjacent */
@@ -65,6 +74,7 @@ syscall	freemem(
 		block->mlength += next->mlength;
 		block->mnext = next->mnext;
 	}
+
 	restore(mask);
 	return OK;
 }

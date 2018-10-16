@@ -4,6 +4,8 @@
 
 void	*minheap;		/* Start of heap			*/
 void	*maxheap;		/* Highest valid heap address		*/
+void	*heaptop;		/* Top of current heap  */
+void	*stkbtm;		/* Buttom of current stack  */
 
 /*------------------------------------------------------------------------
  * meminit - initialize memory bounds and the free memory list
@@ -30,12 +32,21 @@ void	meminit(void) {
        	memptr->mnext = (struct memblk *) NULL;
        	memptr->mlength = (int) truncmb( (uint32)maxheap - 
        			(uint32)HOLEEND - NULLSTK);
+
+		/* XDW: init heaptop & stkbtm*/
+		heaptop = (void *)HOLEEND;
+		stkbtm = maxheap;
+
        } else {
        	/* initialize free memory list to one block */
        	memlist.mnext = memptr = (struct memblk *) roundmb(&end);
        	memptr->mnext = (struct memblk *) NULL;
        	memptr->mlength = (uint32) truncmb((uint32)maxheap -
        			(uint32)&end - NULLSTK);
+		
+		/* XDW: init heaptop & stkbtm */
+		heaptop = (void *)minheap;
+		stkbtm = maxheap;
        }
 
        return;

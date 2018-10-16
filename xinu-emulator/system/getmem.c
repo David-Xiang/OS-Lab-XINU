@@ -23,11 +23,17 @@ char  	*getmem(
 
 	prev = &memlist;
 	curr = memlist.mnext;
-	while (curr != NULL) {			/* Search free list	*/
+	while (curr != NULL && (void*)curr <= stkbtm) {		
+		/* Search free list	*/
 
 		if (curr->mlength == nbytes) {	/* Block is exact match	*/
 			prev->mnext = curr->mnext;
 			memlist.mlength -= nbytes;
+			
+			/* XDW: update heaptop  */
+			if ((void*) curr + nbytes > heaptop)
+				heaptop = curr + nbytes;
+					
 			restore(mask);
 			return (char *)(curr);
 
@@ -38,6 +44,11 @@ char  	*getmem(
 			leftover->mnext = curr->mnext;
 			leftover->mlength = curr->mlength - nbytes;
 			memlist.mlength -= nbytes;
+
+			/* XDW: update heaptop  */
+			if ((void *)curr + nbytes > heaptop)
+				heaptop = curr + nbytes;
+
 			restore(mask);
 			return (char *)(curr);
 		} else {			/* Move to next block	*/

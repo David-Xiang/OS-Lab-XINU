@@ -1,16 +1,38 @@
-/* freemem.c - freemem */
+/* freestk.c - freestk */
+/*
+   Exercise4 of Lab2
+   Implement a stack protection machanism to prevent process's stack from
+   illegal access of other process.
+  
+   My idea:
+   1. Split stack space and heap space. Maintain 2 pointers individually
+   pointing to bottom of stack space and top of heap space. When 
+   allocating memory to a stack or a heap, always make sure:
+   					hptop <= stkbottom
+   2. Add a random-size buffer area to each stack and heap.
+   
+   Implementation:
+   modify getmem(), getstk(), freemem() and freestk().
+	
+ */
 
 #include <xinu.h>
 
 /*------------------------------------------------------------------------
- *  freemem  -  Free a memory block, returning the block to the free list
+ *  freestk -  Free stack memmory allocate by getstk
  *------------------------------------------------------------------------
  */
-syscall	freemem(
-	  char		*blkaddr,	/* Pointer to memory block	*/
+syscall	freestk(
+	  char		*stkaddr,	/* Pointer to memory block	*/
 	  uint32	nbytes		/* Size of block in bytes	*/
 	)
 {
+	nbytes = (uint32) roundmb(nbytes);	/* Use memblk multiples	*/
+
+	// actual blkaddr = stkaddr - roundmb(nbytes) + sizeof(uint32)
+	char *blkaddr = stkaddr - nbytes + sizeof(uint32);
+	/* XDW: blkaddr and stkaddr are different  */ 
+	
 	intmask	mask;			/* Saved interrupt mask		*/
 	struct	memblk	*next, *prev, *block;
 	uint32	top;
@@ -22,7 +44,6 @@ syscall	freemem(
 		return SYSERR;
 	}
 
-	nbytes = (uint32) roundmb(nbytes);	/* Use memblk multiples	*/
 	block = (struct memblk *)blkaddr;
 
 	prev = &memlist;			/* Walk along free list	*/
@@ -53,6 +74,7 @@ syscall	freemem(
 	if (top == (uint32) block) { 	/* Coalesce with previous block	*/
 		prev->mlength += nbytes;
 		block = prev;
+		
 	} else {			/* Link into list as new node	*/
 		block->mnext = next;
 		block->mlength = nbytes;
@@ -62,8 +84,14 @@ syscall	freemem(
 	/* Coalesce with next block if adjacent */
 
 	if (((uint32) block + block->mlength) == (uint32) next) {
+		/* XDW: update stkbtm  */
+		stkbtm = (void *)next + next->mlength + 1;
+
 		block->mlength += next->mlength;
 		block->mnext = next->mnext;
+	}else{
+		/* XDW: update stkbtm  */
+		stkbtm = (void *)block + block->mlength + 1;
 	}
 	restore(mask);
 	return OK;

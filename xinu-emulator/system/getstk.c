@@ -40,13 +40,41 @@ char  	*getstk(
 		restore(mask);
 		return (char *)SYSERR;
 	}
+
+
+
 	if (nbytes == fits->mlength) {		/* Block is exact match	*/
+		/* XDW: check whether the emtpy block is beyond heaptop  */
+		if ((void *)fits < heaptop){
+			kprintf("getstk: fits < heaptop: fits=0x%8X heaptop=0x%8X\n",
+				fits, heaptop);
+			restore(mask);
+			return (char *)SYSERR;
+		}
+
 		fitsprev->mnext = fits->mnext;
 	} else {				/* Remove top section	*/
+		struct memblk *stkbase = 
+			(struct memblk *)((uint32)fits + fits->mlength - nbytes);
+		
+		/* XDW: check whether the stkbase is beyond headtop */
+		if ((void *) stkbase < heaptop){
+			kprintf("getstk: stkbase heaptop: fits=0x%8X heaptop=0x%8X\n",
+				stkbase, heaptop);
+			restore(mask);
+			return (char *)SYSERR;
+		}
+
 		fits->mlength -= nbytes;
-		fits = (struct memblk *)((uint32)fits + fits->mlength);
+		fits = stkbase;
 	}
 	memlist.mlength -= nbytes;
+
+	/* XDW: update stkbtm */
+	if ((void *)fits < stkbtm){
+		stkbtm = fits;
+	}
+
 	restore(mask);
 	return (char *)((uint32) fits + nbytes - sizeof(uint32));
 }
