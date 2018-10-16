@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 /*
-	Exercise1 of Lab2
+	Exercise2 of Lab2
 	Design a program to display the difference of freestk and freemem
 */
 void E2L2(){
