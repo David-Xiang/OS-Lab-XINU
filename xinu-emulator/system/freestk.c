@@ -85,13 +85,15 @@ syscall	freestk(
 
 	if (((uint32) block + block->mlength) == (uint32) next) {
 		/* XDW: update stkbtm  */
-		stkbtm = (void *)next + next->mlength + 1;
+		kprintf("stkbtm goes up from 0x%8X to 0x%8X\n", stkbtm, (void*)next + next->mlength);
+		stkbtm = (void *)next + next->mlength;
 
 		block->mlength += next->mlength;
 		block->mnext = next->mnext;
 	}else{
 		/* XDW: update stkbtm  */
-		stkbtm = (void *)block + block->mlength + 1;
+		kprintf("stkbtm goes up from 0x%8X to 0x%8X\n", stkbtm, (void*)block + block->mlength);
+		stkbtm = (void *)block + block->mlength;
 	}
 	restore(mask);
 	return OK;

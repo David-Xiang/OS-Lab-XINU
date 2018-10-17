@@ -31,8 +31,10 @@ char  	*getmem(
 			memlist.mlength -= nbytes;
 			
 			/* XDW: update heaptop  */
-			if ((void*) curr + nbytes > heaptop)
+			if ((void*) curr + nbytes > heaptop){
+				kprintf("heaptop goes up from 0x%8X to 0x%8X\n", heaptop, curr + nbytes);
 				heaptop = curr + nbytes;
+			}
 					
 			restore(mask);
 			return (char *)(curr);
@@ -46,8 +48,10 @@ char  	*getmem(
 			memlist.mlength -= nbytes;
 
 			/* XDW: update heaptop  */
-			if ((void *)curr + nbytes > heaptop)
+			if ((void *)curr + nbytes > heaptop){
+				kprintf("heaptop goes up from 0x%8X to 0x%8X\n", heaptop, curr + nbytes);
 				heaptop = curr + nbytes;
+			}
 
 			restore(mask);
 			return (char *)(curr);

@@ -72,6 +72,7 @@ char  	*getstk(
 
 	/* XDW: update stkbtm */
 	if ((void *)fits < stkbtm){
+		kprintf("stkbtm goes down from 0x%8X to 0x%8X\n", stkbtm, fits);
 		stkbtm = fits;
 	}
 

@@ -55,8 +55,10 @@ syscall	freemem(
 		block = prev;
 		
 		/* XDW: update heaptop */
-		if ((void *)prev + prev->mlength ==  heaptop)
+		if ((void *)prev + prev->mlength ==  heaptop){
+			kprintf("heaptop goes down from 0x%8X to 0x%8X\n", heaptop, prev);
 			heaptop = (void *)prev;
+		}
 	
 	} else {			/* Link into list as new node	*/
 		block->mnext = next;
@@ -64,8 +66,10 @@ syscall	freemem(
 		prev->mnext = block;
 
 		/* XDW: update heaptop */
-		if ((void *) block + nbytes == heaptop)
+		if ((void *) block + nbytes == heaptop){
+			kprintf("heaptop goes down from 0x%8X to 0x%8X\n", heaptop, block);
 			heaptop = (void *)block;
+		}
 	}
 
 	/* Coalesce with next block if adjacent */

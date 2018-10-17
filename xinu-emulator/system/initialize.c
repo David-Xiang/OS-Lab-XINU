@@ -59,7 +59,7 @@ void	nulluser()
 						memptr = memptr->mnext) {
 		free_mem += memptr->mlength;
 	}
-	kprintf("%10d bytes of free memory.  Free list:\n", free_mem);
+	/*kprintf("%10d bytes of free memory.  Free list:\n", free_mem);
 	for (memptr=memlist.mnext; memptr!=NULL;memptr = memptr->mnext) {
 	    kprintf("           [0x%08X to 0x%08X]\n",
 		(uint32)memptr, ((uint32)memptr) + memptr->mlength - 1);
@@ -73,6 +73,7 @@ void	nulluser()
 		(uint32)&ebss - (uint32)&data);
 	kprintf("           [0x%08X to 0x%08X]\n\n",
 		(uint32)&data, (uint32)&ebss - 1);
+	*/
 
 	/* Enable interrupts */
 
