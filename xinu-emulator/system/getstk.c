@@ -23,7 +23,11 @@ char  	*getstk(
 	nbytes = (uint32) roundmb(nbytes);	/* Use mblock multiples	*/
 
 	prev = &memlist;
-	curr = memlist.mnext;
+
+	/* XDW: searching from heaptop instead of memlist.mnext */
+	// curr = memlist.mnext;
+	curr = ((struct memblk*)heaptop)->mnext;
+	
 	fits = NULL;
 	fitsprev = NULL;  /* Just to avoid a compiler warning */
 
