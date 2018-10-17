@@ -84,16 +84,22 @@ syscall	freestk(
 	/* Coalesce with next block if adjacent */
 
 	if (((uint32) block + block->mlength) == (uint32) next) {
+		/* XDW: this block should coalesce with next free block */
+		if ((void *)block == stkbtm){
 		/* XDW: update stkbtm  */
-		kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", stkbtm, (void*)next + next->mlength);
-		stkbtm = (void *)next + next->mlength;
-
+			kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
+				stkbtm, (void*)next + next->mlength);
+			stkbtm = (void *)next + next->mlength;
+		}
 		block->mlength += next->mlength;
 		block->mnext = next->mnext;
 	}else{
-		/* XDW: update stkbtm  */
-		kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", stkbtm, (void*)block + block->mlength);
-		stkbtm = (void *)block + block->mlength;
+		if ((void *) block == stkbtm){
+			/* XDW: no coalescence, just update stkbtm  */
+			kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
+				stkbtm, (void*)block + block->mlength);
+			stkbtm = (void *)block + block->mlength;
+		}
 	}
 	restore(mask);
 	return OK;

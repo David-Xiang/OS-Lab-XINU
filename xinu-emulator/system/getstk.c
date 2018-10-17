@@ -63,7 +63,7 @@ char  	*getstk(
 		
 		/* XDW: check whether the stkbase is beyond headtop */
 		if ((void *) stkbase < heaptop){
-			kprintf("getstk: stkbase heaptop: fits=0x%08X heaptop=0x%08X\n",
+			kprintf("getstk: stkbase < heaptop: fits=0x%08X heaptop=0x%08X\n",
 				stkbase, heaptop);
 			restore(mask);
 			return (char *)SYSERR;
