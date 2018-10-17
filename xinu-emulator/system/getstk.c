@@ -46,7 +46,7 @@ char  	*getstk(
 	if (nbytes == fits->mlength) {		/* Block is exact match	*/
 		/* XDW: check whether the emtpy block is beyond heaptop  */
 		if ((void *)fits < heaptop){
-			kprintf("getstk: fits < heaptop: fits=0x%8X heaptop=0x%8X\n",
+			kprintf("getstk: fits < heaptop: fits=0x%08X heaptop=0x%08X\n",
 				fits, heaptop);
 			restore(mask);
 			return (char *)SYSERR;
@@ -59,7 +59,7 @@ char  	*getstk(
 		
 		/* XDW: check whether the stkbase is beyond headtop */
 		if ((void *) stkbase < heaptop){
-			kprintf("getstk: stkbase heaptop: fits=0x%8X heaptop=0x%8X\n",
+			kprintf("getstk: stkbase heaptop: fits=0x%08X heaptop=0x%08X\n",
 				stkbase, heaptop);
 			restore(mask);
 			return (char *)SYSERR;
@@ -72,7 +72,7 @@ char  	*getstk(
 
 	/* XDW: update stkbtm */
 	if ((void *)fits < stkbtm){
-		kprintf("stkbtm goes down from 0x%8X to 0x%8X\n", stkbtm, fits);
+		kprintf("stkbtm goes down from 0x%08X to 0x%08X\n", stkbtm, fits);
 		stkbtm = fits;
 	}
 

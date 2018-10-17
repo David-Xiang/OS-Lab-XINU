@@ -9,7 +9,6 @@ process	main(void)
 {
 
 	/* Run the Xinu shell */
-	printBlks();
 	recvclr();
 	//resume(create(shell, 8192, 50, "shell", 1, CONSOLE));
 

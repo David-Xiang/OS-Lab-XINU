@@ -32,7 +32,7 @@ char  	*getmem(
 			
 			/* XDW: update heaptop  */
 			if ((void*) curr + nbytes > heaptop){
-				kprintf("heaptop goes up from 0x%8X to 0x%8X\n", heaptop, curr + nbytes);
+				kprintf("heaptop goes up from 0x%08X to 0x%08X\n", heaptop, curr + nbytes);
 				heaptop = curr + nbytes;
 			}
 					
@@ -49,7 +49,7 @@ char  	*getmem(
 
 			/* XDW: update heaptop  */
 			if ((void *)curr + nbytes > heaptop){
-				kprintf("heaptop goes up from 0x%8X to 0x%8X\n", heaptop, curr + nbytes);
+				kprintf("heaptop goes up from 0x%08X to 0x%08X\n", heaptop, curr + nbytes);
 				heaptop = curr + nbytes;
 			}
 

@@ -8,7 +8,7 @@
    1. Split stack space and heap space. Maintain 2 pointers individually
    pointing to bottom of stack space and top of heap space. When 
    allocating memory to a stack or a heap, always make sure:
-   					hptop <= stkbottom
+   					heaptop <= stkbtm
    2. Add a random-size buffer area to each stack and heap.
    
    Implementation:
@@ -85,14 +85,14 @@ syscall	freestk(
 
 	if (((uint32) block + block->mlength) == (uint32) next) {
 		/* XDW: update stkbtm  */
-		kprintf("stkbtm goes up from 0x%8X to 0x%8X\n", stkbtm, (void*)next + next->mlength);
+		kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", stkbtm, (void*)next + next->mlength);
 		stkbtm = (void *)next + next->mlength;
 
 		block->mlength += next->mlength;
 		block->mnext = next->mnext;
 	}else{
 		/* XDW: update stkbtm  */
-		kprintf("stkbtm goes up from 0x%8X to 0x%8X\n", stkbtm, (void*)block + block->mlength);
+		kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", stkbtm, (void*)block + block->mlength);
 		stkbtm = (void *)block + block->mlength;
 	}
 	restore(mask);
