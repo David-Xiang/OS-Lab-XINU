@@ -25,8 +25,8 @@ char  	*getstk(
 	prev = &memlist;
 
 	/* XDW: searching from heaptop instead of memlist.mnext */
-	// curr = memlist.mnext;
-	curr = ((struct memblk*)heaptop)->mnext;
+	curr = memlist.mnext;
+	//curr = ((struct memblk*)heaptop)->mnext;
 	
 	fits = NULL;
 	fitsprev = NULL;  /* Just to avoid a compiler warning */
