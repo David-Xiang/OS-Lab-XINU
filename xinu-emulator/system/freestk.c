@@ -87,8 +87,8 @@ syscall	freestk(
 		/* XDW: this block should coalesce with next free block */
 		if ((void *)block == stkbtm){
 		/* XDW: update stkbtm  */
-			kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
-				stkbtm, (void*)next + next->mlength);
+			//kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
+			//	stkbtm, (void*)next + next->mlength);
 			stkbtm = (void *)next + next->mlength;
 		}
 		block->mlength += next->mlength;
@@ -96,8 +96,8 @@ syscall	freestk(
 	}else{
 		if ((void *) block == stkbtm){
 			/* XDW: no coalescence, just update stkbtm  */
-			kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
-				stkbtm, (void*)block + block->mlength);
+			//kprintf("stkbtm goes up from 0x%08X to 0x%08X\n", 
+			//	stkbtm, (void*)block + block->mlength);
 			stkbtm = (void *)block + block->mlength;
 		}
 	}

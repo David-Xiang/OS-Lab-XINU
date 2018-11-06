@@ -56,7 +56,7 @@ syscall	freemem(
 		
 		/* XDW: update heaptop */
 		if ((void *)prev + prev->mlength ==  heaptop){
-			kprintf("heaptop goes down from 0x%08X to 0x%08X\n", heaptop, prev);
+			//kprintf("heaptop goes down from 0x%08X to 0x%08X\n", heaptop, prev);
 			heaptop = (void *)prev;
 		}
 	
@@ -67,7 +67,7 @@ syscall	freemem(
 
 		/* XDW: update heaptop */
 		if ((void *) block + nbytes == heaptop){
-			kprintf("heaptop goes down from 0x%08X to 0x%08X\n", heaptop, block);
+			//kprintf("heaptop goes down from 0x%08X to 0x%08X\n", heaptop, block);
 			heaptop = (void *)block;
 		}
 	}
