@@ -8,8 +8,11 @@
  */
 void	clkhandler()
 {
-	enable();
+	/* Exercise 1 of Lab3 */
+	//enable();
 
+	//int i = 0;
+	//while (i++ < 10000000);
 	static	uint32	count1000 = 1000;	/* Count to 1000 ms	*/
 
 	/* Decrement the ms counter, and see if a second has passed */
