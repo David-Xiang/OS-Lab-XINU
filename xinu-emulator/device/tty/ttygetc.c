@@ -14,6 +14,9 @@ devcall	ttygetc(
 	struct	ttycblk	*typtr;		/* Pointer to ttytab entry	*/
 
 	typtr = &ttytab[devptr->dvminor];
+	//if (devptr->dvnum == CONSOLE && typtr->typid != getpid()){
+	//	return SYSERR;
+	//}
 
 	/* Wait for a character in the buffer and extract one character	*/
 

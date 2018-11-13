@@ -22,6 +22,8 @@ devcall	ttyread(
 		return SYSERR;
 	}
 	typtr= &ttytab[devptr->dvminor];
+	//if (devptr->dvnum == CONSOLE && typtr->typid != getpid())
+	//	return SYSERR;
 
 	if (typtr->tyimode != TY_IMCOOKED) {
 

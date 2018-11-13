@@ -14,6 +14,8 @@ devcall	ttyputc(
 	struct	ttycblk	*typtr;		/* Pointer to tty control block	*/
 
 	typtr = &ttytab[devptr->dvminor];
+	//if (devptr->dvnum == CONSOLE && typtr->typid != getpid())
+	//	return SYSERR;
 
 	/* Handle output CRLF by sending CR first */
 

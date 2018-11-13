@@ -71,6 +71,17 @@ devcall	ttyinit(
 	io_outb(uptr->fcr, UART_FCR_EFIFO | UART_FCR_RRESET |
 			   UART_FCR_TRESET | UART_FCR_TRIG2);
 
+	/*----------------------  MODIFICATION  ------------------------*/
+	if (devptr->dvnum == CONSOLE){
+		// init tysem
+		typtr->tysem = semcreate(1);
+
+		// init typid
+		typtr->typid = -1;
+	}
+
+
+
 	/* Start the device */
 
 	ttykickout(uptr);

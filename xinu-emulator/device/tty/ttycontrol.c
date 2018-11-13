@@ -1,4 +1,15 @@
 /* ttycontrol.c - ttycontrol */
+/*
+   Exercise4 of Lab4
+   Implement a control function allowing process to acquire control of 
+   CONSOLE and another control function allowing process to release 
+   control of it.
+   I modified the original ttycontrol and add 2 func to it which are:
+   1. TC_WAIT
+   2. TC_SIGNAL
+   Which process now possesses control of CONSOLE is recorded in ttytab
+   ONLY this processs can call read/write/putc... on CONSOLE
+ */
 
 #include <xinu.h>
 
@@ -49,6 +60,20 @@ devcall	ttycontrol(
 
 	case TC_NOECHO:
 		typtr->tyiecho = FALSE;
+		return (devcall)OK;
+
+	case TC_WAIT:
+		if (devptr->dvnum == CONSOLE){
+			wait(typtr->tysem);
+			typtr->typid = getpid();
+		}
+		return (devcall)OK;
+
+	case TC_SIGNAL:
+		if (devptr->dvnum == CONSOLE && getpid() == typtr->typid){
+			signal(typtr->tysem);
+			typtr->typid = -1;
+		}
 		return (devcall)OK;
 
 	default:

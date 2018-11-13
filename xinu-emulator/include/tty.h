@@ -55,6 +55,10 @@ struct	ttycblk	{			/* Tty line control block	*/
 	char	tyostart;		/* Character that starts output	*/
 	bool8	tyocrlf;		/* Output CR/LF for LF ?	*/
 	char	tyifullc;		/* Char to send when input full	*/
+
+	/*------------------ XDW:MODIFICATION  -----------------*/
+	sid32	tysem;
+	pid32	typid;
 };
 extern	struct	ttycblk	ttytab[];
 
@@ -82,3 +86,7 @@ extern	struct	ttycblk	ttytab[];
 #define	TC_ICHARS	8		/* Return number of input chars	*/
 #define	TC_ECHO		9		/* Turn on echo			*/
 #define	TC_NOECHO	10		/* Turn off echo		*/
+
+/* XDW:MODIFICATION */
+#define TC_WAIT		11		/* Apply for control of CONSOLE */
+#define TC_SIGNAL	12		/* Release the control of CONSOLE  */
