@@ -76,3 +76,7 @@ extern	shellcmd  xsh_help	(int32, char *[]);
 /*---------------------------MY MODIFICATION----------------------------*/
 /* in file xsh_psx.c*/
 extern	shellcmd  xsh_psx	(int32, char* []);
+
+/* in file xsh_read.c */
+extern	shellcmd  xsh_syncread	(int32, char* []);
+extern	shellcmd  xsh_asyncread	(int32, char* []);	 

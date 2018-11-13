@@ -30,7 +30,9 @@ const	struct	cmdent	cmdtab[] = {
 	{"uptime",	FALSE,	xsh_uptime},
 	{"?",		FALSE,	xsh_help},
 
-	{"psx",		FALSE,	xsh_psx}
+	{"psx",		FALSE,	xsh_psx},
+	{"syncread", FALSE, xsh_syncread},
+	{"asyncread", FALSE, xsh_asyncread}
 
 };
 
