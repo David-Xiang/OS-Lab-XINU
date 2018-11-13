@@ -80,3 +80,6 @@ extern	shellcmd  xsh_psx	(int32, char* []);
 /* in file xsh_read.c */
 extern	shellcmd  xsh_syncread	(int32, char* []);
 extern	shellcmd  xsh_asyncread	(int32, char* []);	 
+
+/* in file xsh_open.c */
+extern	shellcmd  xsh_open (int32, char* []);

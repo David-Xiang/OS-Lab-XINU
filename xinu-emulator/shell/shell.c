@@ -32,7 +32,8 @@ const	struct	cmdent	cmdtab[] = {
 
 	{"psx",		FALSE,	xsh_psx},
 	{"syncread", FALSE, xsh_syncread},
-	{"asyncread", FALSE, xsh_asyncread}
+	{"asyncread", FALSE, xsh_asyncread},
+	{"open", FALSE, xsh_open}
 
 };
 
