@@ -77,6 +77,7 @@ shellcmd xsh_udpecho(int nargs, char *args[])
 		if (retval == SYSERR) {
 			fprintf(stderr, "%s: error sending UDP \n",
 				args[0]);
+			udp_release(slot);
 			return 1;
 		}
 
