@@ -1,6 +1,6 @@
 /* udp_recvt.c */
 /*
-   Exercise3 of Lab4
+   Exercise3 of Lab5
    Use timer process to take place of recvtime and modify udp_recv.
  */
 

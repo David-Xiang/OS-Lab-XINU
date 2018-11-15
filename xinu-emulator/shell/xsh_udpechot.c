@@ -1,4 +1,4 @@
-/* xsh_udpechot.c - xsh_udpechot, part of Excecise3 of Lab4 */
+/* xsh_udpechot.c - xsh_udpechot, part of Excecise3 of Lab5 */
 
 #include <xinu.h>
 #include <stdio.h>

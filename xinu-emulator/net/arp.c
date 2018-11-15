@@ -1,6 +1,6 @@
 /* arp.c - arp_init, arp_resolve, arp_in, arp_alloc, arp_ntoh, arp_hton	*/
 /*
-   Exercise4 of Lab4
+   Exercise4 of Lab5
    In order to make sure ARP entry is not outdated, ARP protocol requires
    that cache entry must be removed after a fixed amount of time (no
    matter it's used or not). Modify the code to remove the entries which
