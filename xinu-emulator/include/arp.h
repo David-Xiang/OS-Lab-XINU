@@ -23,6 +23,9 @@
 #define	AR_PENDING	1		/* Resolution in progress	*/
 #define	AR_RESOLVED	2		/* Entry is valid		*/
 
+// XDW: max valid time of an ARP entry
+#define AR_MAXTIME	300		/* Max valid time of an ARP entry	*/
+
 #pragma pack(2)
 struct	arppacket {			/* ARP packet for IP & Ethernet	*/
 	byte	arp_ethdst[ETH_ADDR_LEN];/* Ethernet dest. MAC addr	*/
@@ -45,6 +48,7 @@ struct	arpentry {			/* Entry in the ARP cache	*/
 	uint32	arpaddr;		/* IP address of the entry	*/
 	pid32	arpid;			/* Waiting process or -1 	*/
 	byte	arhaddr[ARP_HALEN];	/* Ethernet address of the entry*/
+	uint32	artime;		/* Add time of the entry	*/
 };
 
 extern struct	arpentry arpcache[];

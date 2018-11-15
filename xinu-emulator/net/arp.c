@@ -1,4 +1,11 @@
 /* arp.c - arp_init, arp_resolve, arp_in, arp_alloc, arp_ntoh, arp_hton	*/
+/*
+   Exercise4 of Lab4
+   In order to make sure ARP entry is not outdated, ARP protocol requires
+   that cache entry must be removed after a fixed amount of time (no
+   matter it's used or not). Modify the code to remove the entries which
+   last for more than 5 minutes.
+ */
 
 #include <xinu.h>
 
@@ -58,7 +65,9 @@ status	arp_resolve (
 		if (arptr->arstate == AR_FREE) {
 			continue;
 		}
-		if (arptr->arpaddr == nxthop) { /* Adddress is in cache	*/
+		if (arptr->arpaddr == nxthop && 
+			arptr->artime + AR_MAXTIME > clktime ) {
+			/* Adddress is in cache	and is not outdated */
 			break;
 		}
 	}
@@ -198,8 +207,11 @@ void	arp_in (
 		/* If sender's address matches, we've found it */
 
 		if (arptr->arpaddr == pktptr->arp_sndpa) {
-			found = TRUE;
-			break;
+			if (arptr->arstate == AR_PENDING || 
+				arptr->artime + AR_MAXTIME > clktime){
+				found = TRUE;
+				break;
+			}
 		}
 	}
 
@@ -212,6 +224,9 @@ void	arp_in (
 		/* If a process was waiting, inform the process */
 
 		if (arptr->arstate == AR_PENDING) {
+			// XDW: fill araddtime field
+			arptr->artime = clktime;
+
 			/* Mark resolved and notify waiting process */
 			arptr->arstate = AR_RESOLVED;
 			send(arptr->arpid, OK);
@@ -252,6 +267,7 @@ void	arp_in (
 		arptr->arpaddr = pktptr->arp_sndpa;
 		memcpy(arptr->arhaddr, pktptr->arp_sndha, ARP_HALEN);
 		arptr->arstate = AR_RESOLVED;
+		arptr->artime = clktime;
 	}
 
 	/* Hand-craft an ARP reply packet and send back to requester	*/
@@ -299,10 +315,12 @@ int32	arp_alloc ()
 {
 	int32	slot;			/* Slot in ARP cache		*/
 
-	/* Search for a free slot */
+	/* Search for a free slot or an outdated slot */
 
 	for (slot=0; slot < ARP_SIZ; slot++) {
-		if (arpcache[slot].arstate == AR_FREE) {
+		if (arpcache[slot].arstate == AR_FREE ||
+			arpcache[slot].artime + AR_MAXTIME < clktime) {
+			// XDW: it's free or outdated
 			memset((char *)&arpcache[slot],
 					NULLCH, sizeof(struct arpentry));
 			return slot;
