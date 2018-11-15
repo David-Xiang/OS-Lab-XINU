@@ -27,6 +27,11 @@ static void ethtest(int secs){
 	char data[2000] = "";
 	uint32 count = 0;
 
+	// fill data with all '0'
+	int i = 0;
+	for (i = 0; i < 2000 - 1; i++)
+		data[i] = '0';
+
 	// start test sending small packets for 'secs' seconds
 	kprintf("Start sending small packets to ETHER0.\n");
 	uint32 start = clktime;
