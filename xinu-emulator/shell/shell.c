@@ -35,8 +35,7 @@ const	struct	cmdent	cmdtab[] = {
 	{"syncread",	FALSE,	xsh_syncread},
 	{"asyncread",	FALSE,	xsh_asyncread},
 	{"open",	FALSE,	xsh_open},
-	{"ethtest",	FALSE,	xsh_ethtest},
-	{"arptest",	FALSE,	xsh_arptest}
+	{"ethtest",	FALSE,	xsh_ethtest}
 };
 
 uint32	ncmd = sizeof(cmdtab) / sizeof(struct cmdent);
