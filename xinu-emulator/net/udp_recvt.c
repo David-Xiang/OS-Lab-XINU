@@ -66,8 +66,10 @@ int32	udp_recvt (
 		udptr->udpid = currpid;
 
 		// create a timer process
-		resume(create(timer, 8192, getprio(getpid()), "timer", 1, timeout));
+		pid32 timerpid = create(timer, 8192, getprio(getpid()), "timer", 1, timeout);
+		resume(timerpid);
 		msg = receive(); // wait until message arrives
+		kill(timerpid);
 
 		udptr->udstate = UDP_USED;
 		if (msg == TIMEOUT) {
