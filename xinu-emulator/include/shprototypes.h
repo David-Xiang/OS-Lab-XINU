@@ -64,6 +64,9 @@ extern	shellcmd  xsh_udpdump	(int32, char *[]);
 /* in file xsh_udpecho.c */
 extern	shellcmd  xsh_udpecho	(int32, char *[]);
 
+/* in file xsh_udpechot.c */
+extern	shellcmd  xsh_udpechot  (int32, char *[]);
+
 /* in file xsh_udpeserver.c */
 extern	shellcmd  xsh_udpeserver (int32, char *[]);
 
@@ -83,3 +86,9 @@ extern	shellcmd  xsh_asyncread	(int32, char* []);
 
 /* in file xsh_open.c */
 extern	shellcmd  xsh_open (int32, char* []);
+
+/* in file xsh_ethtest.c */
+extern	shellcmd  xsh_ethtest  (int32, char* []);
+
+/* in file xsh_arptest.c */
+extern	shellcmd  xsh_arptest  (int32, char* []);

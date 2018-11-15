@@ -26,15 +26,17 @@ const	struct	cmdent	cmdtab[] = {
 	{"sleep",	FALSE,	xsh_sleep},
 	{"udp",		FALSE,	xsh_udpdump},
 	{"udpecho",	FALSE,	xsh_udpecho},
+	{"udpechot",	FALSE,	xsh_udpechot}, // using udp_recvt
 	{"udpeserver",	FALSE,	xsh_udpeserver},
 	{"uptime",	FALSE,	xsh_uptime},
 	{"?",		FALSE,	xsh_help},
 
 	{"psx",		FALSE,	xsh_psx},
-	{"syncread", FALSE, xsh_syncread},
-	{"asyncread", FALSE, xsh_asyncread},
-	{"open", FALSE, xsh_open}
-
+	{"syncread",	FALSE,	xsh_syncread},
+	{"asyncread",	FALSE,	xsh_asyncread},
+	{"open",	FALSE,	xsh_open},
+	{"ethtest",	FALSE,	xsh_ethtest},
+	{"arptest",	FALSE,	xsh_arptest}
 };
 
 uint32	ncmd = sizeof(cmdtab) / sizeof(struct cmdent);
