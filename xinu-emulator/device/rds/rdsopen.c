@@ -1,4 +1,9 @@
 /* rdsopen.c - rdsopen */
+/*
+ 	Excerise1 of Lab6
+	Modify rdsopen.c to make sure each disk ID is unique when trying to 
+	open the disk.
+ */
 
 #include <xinu.h>
 
@@ -29,6 +34,30 @@ devcall	rdsopen (
 		return SYSERR;
 	}
 	rdptr->rd_state = RD_PEND;
+
+	/*
+		XDW: Go through every devtab check whether this device is a rdisk
+		and then check its id with arg diskid.
+	 */
+	bool8 unique = TRUE;
+	struct rdscblk *tmp;
+	int i;
+	for (i = 0; i < NDEVS; i++){
+		devptr = &devtab[i];
+		if (strncmp(devptr->dvname, "RDISK", 5) == 0){
+			tmp = &rdstab[devptr->dvminor];
+			if (tmp->rd_state == RD_OPEN && 
+				strncmp(tmp->rd_id, diskid, RD_IDLEN) == 0){
+				// found a remote disk which name is the same as this one
+				unique = FALSE;
+			}
+		}
+	}
+
+	if (unique == FALSE)
+		return SYSERR;
+
+
 
 	/* Copy disk ID into free table slot */
 
