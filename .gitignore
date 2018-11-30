@@ -5,3 +5,13 @@ xinu-galileo/config
 xinu-x86/compile
 xinu-x86/congfig
 .DS_Store
+Remote-Disk-Server/*
+Remote-File-Server/*
+!Remote-Disk-Server/*.h
+!Remote-Disk-Server/*.c
+!Remote-Disk-Server/Makefile
+!Remote-Disk-Server/DESIGN
+!Remote-Disk-Server/MESSAGE-FORMATS
+!Remote-File-Server/Makefile
+!Remote-File-Server/*.c
+!Remote-File-Server/*.o
