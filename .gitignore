@@ -14,4 +14,4 @@ Remote-File-Server/*
 !Remote-Disk-Server/MESSAGE-FORMATS
 !Remote-File-Server/Makefile
 !Remote-File-Server/*.c
-!Remote-File-Server/*.o
+!Remote-File-Server/*.h
