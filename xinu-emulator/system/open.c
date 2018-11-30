@@ -21,6 +21,7 @@ syscall	open(
 		restore(mask);
 		return SYSERR;
 	}
+	kprintf("%d\n", descrp);
 	devptr = (struct dentry *) &devtab[descrp];
 	retval = (*devptr->dvopen) (devptr, name, mode);
 	restore(mask);

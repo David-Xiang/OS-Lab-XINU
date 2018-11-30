@@ -89,3 +89,6 @@ extern	shellcmd  xsh_open (int32, char* []);
 
 /* in file xsh_ethtest.c */
 extern	shellcmd  xsh_ethtest  (int32, char* []);
+
+/* in file xsh_closefiletest.c */
+extern	shellcmd  xsh_closefiletest	(int32, char* []);

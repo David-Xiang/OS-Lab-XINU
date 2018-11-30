@@ -1,4 +1,9 @@
 /* kill.c - kill */
+/*
+ 	Exercise2 of Lab6
+	Implement a function that close all the files opened by a process when 
+	this process is closed.
+ */
 
 #include <xinu.h>
 
@@ -26,9 +31,18 @@ syscall	kill(
 	}
 
 	send(prptr->prparent, pid);
-	for (i=0; i<3; i++) {
-		close(prptr->prdesc[i]);
+	
+	/* XDW: Modification is here */
+	struct dentry *dvptr;
+	for (i=0; i<NDESC; i++) {
+		if (prptr->prdesc[i] != -1){
+			dvptr = &devtab[prptr->prdesc[i]];
+			if (prptr->prdesc[i] != CONSOLE)
+				kprintf("Closeing device: %s\n", dvptr->dvname);
+			close(prptr->prdesc[i]);
+		}
 	}
+
 	freestk(prptr->prstkbase, prptr->prstklen);
 
 	switch (prptr->prstate) {
