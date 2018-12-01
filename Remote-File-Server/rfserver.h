@@ -44,3 +44,6 @@ extern	void	rsstat  (struct rf_msg_sreq *, struct rf_msg_sres *);
 extern	void	rsmkdir (struct rf_msg_mreq *, struct rf_msg_mres *);
 extern	void	rsrmdir (struct rf_msg_xreq *, struct rf_msg_xres *);
 extern	int	rsofile	(char *, int);
+
+/* XDW: Modified */
+extern	void	rsclose	(struct	rf_msg_creq *, struct rf_msg_cres *);

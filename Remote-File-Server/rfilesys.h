@@ -105,6 +105,9 @@ extern	struct	rflcblk	rfltab[];	/* remote file control blocks	*/
 #define	RF_MSG_XREQ	0x0008		/* Rmdir request and response 	*/
 #define	RF_MSG_XRES	(RF_MSG_XREQ | RF_MSG_RESPONSE)
 
+#define RF_MSG_CREQ 0x0009		/* Close request and response 	*/
+#define RF_MSG_CRES (RF_MSE_CREQ | RF_MSG_RESPONSE)
+
 #define	RF_MIN_REQ	RF_MSG_RREQ	/* Minimum request type		*/
 #define	RF_MAX_REQ	RF_MSG_XREQ	/* Maximum request type		*/
 
@@ -289,5 +292,18 @@ struct	rf_msg_xreq	{		/* remote file rmdir request	*/
 #pragma pack(2)
 struct	rf_msg_xres	{		/* remote file rmdir response	*/
 	RF_MSG_HDR			/* header fields		*/
+};
+#pragma pack()
+
+/* XDW: Close */
+#pragma pack(2)
+struct rf_msg_creq {
+	RF_MSG_HDR
+};
+#pragma pack()
+
+#pragma pack(2)
+struct rf_msg_cres {
+	RF_MSG_HDR
 };
 #pragma pack()

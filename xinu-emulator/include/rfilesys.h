@@ -18,7 +18,7 @@
 /* Global data for the remote server */
 
 #ifndef	RF_SERVER_IP
-#define	RF_SERVER_IP	"128.10.3.51"
+#define	RF_SERVER_IP	"10.0.2.4"
 #endif
 
 #ifndef	RF_SERVER_PORT
@@ -103,6 +103,10 @@ extern	struct	rflcblk	rfltab[];	/* Remote file control blocks	*/
 
 #define	RF_MSG_XREQ	0x0008		/* Rmdir request and response 	*/
 #define	RF_MSG_XRES	(RF_MSG_XREQ | RF_MSG_RESPONSE)
+
+/* XDW:Modified */
+#define RF_MSG_CREQ 0x0009		/* Close request and response 	*/
+#define RF_MSG_CRES (RF_MSG_CREQ | RF_MSG_RESPONSE)
 
 #define	RF_MIN_REQ	RF_MSG_RREQ	/* Minimum request type		*/
 #define	RF_MAX_REQ	RF_MSG_XREQ	/* Maximum request type		*/
@@ -288,5 +292,18 @@ struct	rf_msg_xreq	{		/* Remote file rmdir request	*/
 #pragma pack(2)
 struct	rf_msg_xres	{		/* Remote file rmdir response	*/
 	RF_MSG_HDR			/* Header fields		*/
+};
+#pragma pack()
+
+/* XDW: Close */
+#pragma pack(2)
+struct rf_msg_creq{
+	RF_MSG_HDR
+};
+#pragma pack()
+
+#pragma pack(2)
+struct rf_msg_cres{
+	RF_MSG_HDR
 };
 #pragma pack()
