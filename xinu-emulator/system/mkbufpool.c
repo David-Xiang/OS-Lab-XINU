@@ -53,7 +53,7 @@ bpid32	mkbufpool(
 	bpptr->bpnum = numbufs;
 	
 	/* XDW: mark this buffer pool  */
-	mark(bpptr->bploc);
+	//mark(bpptr->bploc);
 	restore(mask);
 	return poolid;
 }
