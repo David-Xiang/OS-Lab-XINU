@@ -103,8 +103,16 @@ void trap(int inum)
 {
 	long		*sp;
 	intmask 	mask;
+	struct jmpent* jmpptr;
 
 	mask = disable();
+	jmpptr = &jmptab[getpid()];
+	if(jmpptr->valid){
+		kprintf("enter longjmp...\n");
+		jmpptr->inum = inum;
+		longjmp();
+	}
+
 	kprintf("TRAP\n");
 	asm("movl	%ebp,fp");
 	sp = fp + 15;	/* eflags/CS/eip/ebp/regs/trap#/Xtrap/ebp */

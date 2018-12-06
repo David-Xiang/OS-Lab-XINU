@@ -95,3 +95,6 @@ extern	shellcmd  xsh_closefiletest	(int32, char* []);
 
 /* in file xsh_rfstest.c */
 extern	shellcmd  xsh_rfstest(int32, char* []);
+
+/* in file xsh_trycatchtest.c */
+extern	shellcmd  xsh_trycatchtest(int32, char* []);
