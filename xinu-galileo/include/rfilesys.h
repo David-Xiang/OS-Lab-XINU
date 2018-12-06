@@ -18,7 +18,7 @@
 /* Global data for the remote server */
 
 #ifndef	RF_SERVER_IP
-#define	RF_SERVER_IP	"128.10.3.51"
+#define	RF_SERVER_IP	"255.255.255.255"
 #endif
 
 #ifndef	RF_SERVER_PORT
@@ -109,6 +109,9 @@ extern	struct	rflcblk	rfltab[];	/* Remote file control blocks	*/
 
 #define	RF_MIN_REQ	RF_MSG_RREQ	/* Minimum request type		*/
 #define	RF_MAX_REQ	RF_MSG_CREQ	/* Maximum request type		*/
+/* XDW:Modified */
+#define RF_MSG_CREQ 0x0009	/* Close request and response */
+#define RF_MSG_CRES (RF_MSG_CREQ | RF_MSG_RESPONSE)
 
 /* Message header fields present in each message */
 
@@ -200,24 +203,6 @@ struct	rf_msg_oreq	{		/* Remote file open request	*/
 struct	rf_msg_ores	{		/* Remote file open response	*/
 	RF_MSG_HDR			/* Header fields		*/
 	int32	rf_mode;		/* Xinu mode bits		*/
-};
-#pragma pack()
-
-/************************************************************************/
-/*									*/
-/*				Close					*/
-/*									*/
-/************************************************************************/
-
-#pragma pack(2)
-struct	rf_msg_creq	{		/* Remote file close request	*/
-	RF_MSG_HDR			/* Header fields		*/
-};
-#pragma pack()
-
-#pragma pack(2)
-struct	rf_msg_cres	{		/* Remote file close response	*/
-	RF_MSG_HDR			/* Header fields		*/
 };
 #pragma pack()
 
@@ -327,3 +312,16 @@ struct	rfdirent	{
 	char	d_name[256];		/* Name of the file	*/
 };
 #pragma pack()
+
+/* XDW: Close */
+#pragma pack(2)
+struct rf_msg_creq{
+RF_MSG_HDR
+};
+#pragma pack()
+#pragma pack(2)
+struct rf_msg_cres{
+RF_MSG_HDR
+};
+#pragma pack()
+

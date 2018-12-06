@@ -23,7 +23,9 @@ devcall	lfsopen (
 	bool8		found;		/* Was the name found?		*/
 	int32	retval;			/* Value returned from function	*/
 	int32	mbits;			/* Mode bits			*/
-
+	struct procent *prptr; /* Ptr to process's table entry */
+int32 slot; /* Empty slot in prptr->prdesc */
+prptr = &proctab[getpid()];
 	/* Check length of name file (leaving space for NULLCH */
 
 	from = name;
@@ -35,7 +37,18 @@ devcall	lfsopen (
 	if (i >= LF_NAME_LEN) {		/* Name is too long */
 		return SYSERR;
 	}
-
+	/* XDW: If this process has open more than NDES device(no empty slot
+in prptr->prdesc[]), return SYSERR */
+found = FALSE;
+for (i = 0; i < NDESC; i++){
+if (prptr->prdesc[i] == -1){
+found = TRUE;
+slot = i;
+break;
+}
+}
+if (!found)
+return SYSERR;
 	/* Parse mode argument and convert to binary */
 
 	mbits = lfgetmode(mode);
@@ -178,6 +191,8 @@ devcall	lfsopen (
 	lfptr->lfbyte = &lfptr->lfdblock[LF_BLKSIZ];
 	lfptr->lfibdirty = FALSE;
 	lfptr->lfdbdirty = FALSE;
+	/* XDW: register this device in prptr->prdesc */
+prptr->prdesc[slot] = lfnext;
 
 	signal(Lf_data.lf_mutex);
 

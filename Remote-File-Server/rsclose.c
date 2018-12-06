@@ -12,10 +12,10 @@
 #include "rfserver.h"
 
 /*------------------------------------------------------------------------
- * rsopen - handle an close request, merely send a response back
+ * rsclose- handle an close request, merely send a response back
  *------------------------------------------------------------------------
  */
-void	rsopen (
+void	rsclose (
 	 struct	rf_msg_creq *reqptr,	/* ptr to read request		*/
 	 struct	rf_msg_cres *resptr	/* ptr to read response		*/
 	)

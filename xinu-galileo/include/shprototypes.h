@@ -72,3 +72,10 @@ extern	shellcmd  xsh_uptime	(int32, char *[]);
 
 /* in file xsh_help.c */
 extern	shellcmd  xsh_help	(int32, char *[]);
+
+
+/* in file xsh_closefiletest.c */
+extern	shellcmd xsh_closefiletest	(int32, char* []);
+
+/* in file xsh_rfstest.c */
+extern	shellcmd xsh_rfstest(int32, char* []);

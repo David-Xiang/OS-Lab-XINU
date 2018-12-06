@@ -56,6 +56,7 @@ int32	rfscomm (
 			rlen, RF_TIMEOUT);
 
 		if (retval == TIMEOUT) {
+			kprintf("timeout\n");
 			continue;
 		} else if (retval == SYSERR) {
 			kprintf("Error reading remote file reply\n");

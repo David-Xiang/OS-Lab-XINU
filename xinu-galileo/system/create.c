@@ -54,7 +54,9 @@ pid32	create(
 	prptr->prdesc[0] = CONSOLE;
 	prptr->prdesc[1] = CONSOLE;
 	prptr->prdesc[2] = CONSOLE;
-
+for (i = 3; i < NDESC; i++){
+prptr->prdesc[i] = -1;
+}
 	/* Initialize stack as if the process was called		*/
 
 	*saddr = STACKMAGIC;
