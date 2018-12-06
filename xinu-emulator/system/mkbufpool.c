@@ -50,6 +50,10 @@ bpid32	mkbufpool(
 	}
 	bpptr = (struct bpentry *)buf;
 	bpptr->bpnext = (struct bpentry *)NULL;
+	bpptr->bpnum = numbufs;
+	
+	/* XDW: mark this buffer pool  */
+	mark(bpptr->bploc);
 	restore(mask);
 	return poolid;
 }

@@ -18,7 +18,9 @@ struct	bpentry	{		/* Description of a single buffer pool	*/
 	sid32	bpsem;		/* semaphore that counts buffers	*/
 				/*    currently available in the pool	*/
 	uint32	bpsize;		/* size of buffers in this pool		*/
-	};
+	int32 	bpnum;		/* XDW: number of buffers in this pool	*/
+	memmark bploc;		/* XDW: add a mark to implement memory marking */
+};
 
 extern	struct	bpentry buftab[];/* Buffer pool table			*/
 extern	bpid32	nbpools;	/* current number of allocated pools	*/
