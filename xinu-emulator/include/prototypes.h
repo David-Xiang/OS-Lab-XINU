@@ -623,3 +623,6 @@ extern	syscall	yield(void);
 
 /* in file freestk.c  */
 extern syscall freestk(char *, uint32);
+
+/* in file myttyread.c */
+extern	devcall	myttyread(struct dentry *, char *, int32);
